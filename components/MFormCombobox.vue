@@ -1,6 +1,5 @@
 <template>
-  <m-form-select
-    :items="items"
+  <m-form-select :items="items"
     v-model="val"
     :name="name"
     :readonly="false"
@@ -11,9 +10,9 @@
     @focus="onfocus"
     :labelPosition="labelPosition"
     :disabled="disabled"
+    :clearable="clearable"
     :appendToBody="appendToBody"
-    @change="onchange($event)"
-  ></m-form-select>
+    @change="onchange($event)"></m-form-select>
 </template>
 
 <script>
@@ -35,6 +34,7 @@ export default {
     "itemTextParams",
     "itemValue",
     "disabled",
+    "clearable",
     "appendToBody",
   ],
   data() {

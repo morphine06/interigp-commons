@@ -4,127 +4,117 @@
       <div class="row mb-3">
         <div class="col-md-5">
           <h4>Entreprise</h4>
-          <m-form-text
-            class="mb-2"
+          <m-form-text class="mb-2"
             label="Nom de l'entreprise ou de l'exploitation *"
             :name="$Utils.randomstring('pa_society')"
-            v-model="row_pa.pa_society"
-          ></m-form-text>
-          <m-form-text
-            class="mb-1"
+            v-model="row_pa.pa_society"></m-form-text>
+          <m-form-text class="mb-1"
             label="Adresse *"
             :name="$Utils.randomstring('pa_address1')"
-            v-model="row_pa.pa_address1"
-          ></m-form-text>
-          <m-form-text
-            class="mb-2"
+            v-model="row_pa.pa_address1"></m-form-text>
+          <m-form-text class="mb-2"
             :name="$Utils.randomstring('pa_address2')"
-            v-model="row_pa.pa_address2"
-          ></m-form-text>
+            v-model="row_pa.pa_address2"></m-form-text>
           <div class="row mb-2">
             <div class="col-md-6">
-              <m-form-text
-                label="Code postal *"
+              <m-form-text label="Code postal *"
                 :name="$Utils.randomstring('pa_zip')"
-                v-model="row_pa.pa_zip"
-              ></m-form-text>
+                v-model="row_pa.pa_zip"></m-form-text>
             </div>
             <div class="col-md-6">
-              <m-form-text
-                label="Ville *"
+              <m-form-text label="Ville *"
                 :name="$Utils.randomstring('pa_city')"
-                v-model="row_pa.pa_city"
-              ></m-form-text>
+                v-model="row_pa.pa_city"></m-form-text>
             </div>
           </div>
-          <m-form-text
-            label="Site web"
+          <m-form-text label="Site web"
             :name="$Utils.randomstring('pa_web')"
-            v-model="row_pa.pa_web"
-          ></m-form-text>
+            v-model="row_pa.pa_web"></m-form-text>
         </div>
         <div class="col-md-6 offset-md-1">
           <h4>Coordonnées</h4>
-          <m-form-select
-            class="mb-2"
+          <m-form-select class="mb-2"
             label="Civilité *"
             :items="$store.state.items_civility"
             :name="$Utils.randomstring('pa_civility')"
-            v-model="row_pa.pa_civility"
-          ></m-form-select>
+            v-model="row_pa.pa_civility"></m-form-select>
           <div class="row mb-2">
             <div class="col-md-6">
-              <m-form-text
-                label="Prénom *"
+              <m-form-text label="Prénom *"
                 :name="$Utils.randomstring('pa_firstname')"
-                v-model="row_pa.pa_firstname"
-              ></m-form-text>
+                v-model="row_pa.pa_firstname"></m-form-text>
             </div>
             <div class="col-md-6">
-              <m-form-text
-                label="Nom *"
+              <m-form-text label="Nom *"
                 :name="$Utils.randomstring('pa_name')"
-                v-model="row_pa.pa_name"
-              ></m-form-text>
+                v-model="row_pa.pa_name"></m-form-text>
             </div>
           </div>
-          <m-form-text
-            class="mb-2"
-            label="Fonction"
+          <m-form-text class="mb-2"
+            label="Fonction *"
             :name="$Utils.randomstring('pa_fonction')"
-            v-model="row_pa.pa_fonction"
-          ></m-form-text>
+            v-model="row_pa.pa_fonction"></m-form-text>
           <div class="row mb-2">
             <div class="col-md-6">
-              <m-form-text
-                label="Téléphone fixe"
+              <m-form-text label="Téléphone fixe *"
                 :name="$Utils.randomstring('pa_phone_fix')"
-                v-model="row_pa.pa_phone_fix"
-              ></m-form-text>
+                v-model="row_pa.pa_phone_fix"></m-form-text>
             </div>
             <div class="col-md-6">
-              <m-form-text
-                label="Téléphone mobile"
+              <m-form-text label="Téléphone mobile"
                 :name="$Utils.randomstring('pa_phone_mobile')"
-                v-model="row_pa.pa_phone_mobile"
-              ></m-form-text>
+                v-model="row_pa.pa_phone_mobile"></m-form-text>
             </div>
           </div>
+
+          <m-form-combobox v-model="row_pa.center1"
+            style="max-width: 870px"
+            label="Votre interprofession principale"
+            :store-url="$config.server_url + '/backoffice/1.0/centers'"
+            item-value="ce_id"
+            :item-text="$options.filters.formatCenterName"
+            :store-params="{
+              sort: 'ce_name ASC',
+            }"></m-form-combobox>
+          <m-form-combobox v-model="row_pa.center2"
+            style="max-width: 870px"
+            label="Votre interprofession secondaire"
+            :store-url="$config.server_url + '/backoffice/1.0/centers'"
+            item-value="ce_id"
+            :item-text="$options.filters.formatCenterName"
+            :store-params="{
+              sort: 'ce_name ASC',
+            }"></m-form-combobox>
         </div>
       </div>
     </div>
     <div class="frame">
       <div class="d-flex justify-content-between">
-        <m-form-checkbox
-          class="mb-2"
+        <m-form-checkbox class="mb-2"
           label="<span class='fw-bold'>Je souhaite être candidat</span>"
           :name="$Utils.randomstring('pa_candidat')"
           v-model="row_pa.pa_candidat"
           @change="checkboxCandidat"
-          :disabled="
-            from !== 'backoffice' &&
+          :disabled="from !== 'backoffice' &&
             !$dayjs().isBetween(
               row_pa.yearpreferences.yp_start_inscription_date,
               row_pa.yearpreferences.yp_end_inscription_date_candidate,
               'day',
               '[]'
             )
-          "
-        ></m-form-checkbox>
-        <div
-          class="d-flex align-items-center"
-          v-if="from === 'backoffice' && $Utils.isAdmin()"
-        >
-          <div v-if="row_pa.pa_candidat_valide" class="me-2">
+            "></m-form-checkbox>
+        <div class="d-flex align-items-center"
+          v-if="from === 'backoffice' && $Utils.isAdmin()">
+          <div v-if="row_pa.pa_candidat_valide"
+            class="me-2">
             Candidat validé
           </div>
-          <div v-else class="me-2">Candidat non validé</div>
+          <div v-else
+            class="me-2">Candidat non validé</div>
           <label class="switch">
-            <input
-              v-model="row_pa.pa_candidat_valide"
+            <input v-model="row_pa.pa_candidat_valide"
               type="checkbox"
-              @change="devalidCandidat"
-            />
+              @change="devalidCandidat" />
             <span class="slider round"></span>
           </label>
         </div>
@@ -135,46 +125,34 @@
             <div class="d-flex mb-3">
               <h4>Adresse de facturation</h4>
               <div>
-                <button
-                  class="btn btn-primary ms-4 btn-sm"
-                  @click="copyAddress"
-                >
+                <button class="btn btn-primary ms-4 btn-sm"
+                  @click="copyAddress">
                   Copier
                 </button>
               </div>
             </div>
             <div>
-              <m-form-text
-                class="mb-2"
+              <m-form-text class="mb-2"
                 label="Nom de l'entreprise ou de l'exploitation *"
                 :name="$Utils.randomstring('pa_society_fac')"
-                v-model="row_pa.pa_society_fac"
-              ></m-form-text>
-              <m-form-text
-                class="mb-1"
+                v-model="row_pa.pa_society_fac"></m-form-text>
+              <m-form-text class="mb-1"
                 label="Adresse *"
                 :name="$Utils.randomstring('pa_address1_fac')"
-                v-model="row_pa.pa_address1_fac"
-              ></m-form-text>
-              <m-form-text
-                class="mb-2"
+                v-model="row_pa.pa_address1_fac"></m-form-text>
+              <m-form-text class="mb-2"
                 :name="$Utils.randomstring('pa_address2_fac')"
-                v-model="row_pa.pa_address2_fac"
-              ></m-form-text>
+                v-model="row_pa.pa_address2_fac"></m-form-text>
               <div class="row mb-2">
                 <div class="col-md-6">
-                  <m-form-text
-                    label="Code postal *"
+                  <m-form-text label="Code postal *"
                     :name="$Utils.randomstring('pa_zip_fac')"
-                    v-model="row_pa.pa_zip_fac"
-                  ></m-form-text>
+                    v-model="row_pa.pa_zip_fac"></m-form-text>
                 </div>
                 <div class="col-md-6">
-                  <m-form-text
-                    label="Ville *"
+                  <m-form-text label="Ville *"
                     :name="$Utils.randomstring('pa_city_fac')"
-                    v-model="row_pa.pa_city_fac"
-                  ></m-form-text>
+                    v-model="row_pa.pa_city_fac"></m-form-text>
                 </div>
               </div>
             </div>
@@ -184,35 +162,30 @@
     </div>
     <div class="frame">
       <div class="d-flex justify-content-between">
-        <m-form-checkbox
-          class="mb-2"
+        <m-form-checkbox class="mb-2"
           label="<span class='fw-bold'>Je souhaite être juré</span>"
           :name="$Utils.randomstring('pa_jure')"
           v-model="row_pa.pa_jure"
           @input="checkboxJure"
-          :disabled="
-            from !== 'backoffice' &&
+          :disabled="from !== 'backoffice' &&
             !$dayjs().isBetween(
               row_pa.yearpreferences.yp_start_inscription_date,
               row_pa.yearpreferences.yp_end_inscription_date_jure,
               'day',
               '[]'
             )
-          "
-        ></m-form-checkbox>
+            "></m-form-checkbox>
 
-        <div
-          class="d-flex align-items-center"
-          v-if="from === 'backoffice' && $Utils.isAdmin()"
-        >
-          <div v-if="row_pa.pa_jure_valide" class="me-2">Juré validé</div>
-          <div v-else class="me-2">Juré non validé</div>
+        <div class="d-flex align-items-center"
+          v-if="from === 'backoffice' && $Utils.isAdmin()">
+          <div v-if="row_pa.pa_jure_valide"
+            class="me-2">Juré validé</div>
+          <div v-else
+            class="me-2">Juré non validé</div>
           <label class="switch">
-            <input
-              :disabled="disabledJure"
+            <input :disabled="disabledJure"
               v-model="row_pa.pa_jure_valide"
-              type="checkbox"
-            />
+              type="checkbox" />
             <span class="slider round"></span>
           </label>
         </div>
@@ -223,45 +196,114 @@
           <div class="fw-bold me-4 width360">
             Est-ce votre première participation ?
           </div>
-          <m-form-select
-            class="width200"
+          <m-form-select class="width200"
             :name="$Utils.randomstring('pa_firstparticipation')"
             v-model="row_pa.pa_firstparticipation"
-            :items="$store.state.items_boolean_int"
-          ></m-form-select>
+            :items="$store.state.items_boolean_int"></m-form-select>
         </div>
         <div class="d-md-flex align-items-center mb-2">
           <div class="fw-bold me-4 width360">
             Dans quelle catégorie vous situez-vous ?
           </div>
-          <m-form-select
-            class="width300"
+          <m-form-select class="width300"
             :name="$Utils.randomstring('pa_typejure')"
             v-model="row_pa.pa_typejure"
-            :items="$store.state.items_typejure"
-          ></m-form-select>
-          <div
-            class="d-md-flex align-items-center ms-3 mb-2"
-            v-if="row_pa.pa_typejure === 9"
-          >
+            :items="$store.state.items_typejure"></m-form-select>
+          <div class="d-md-flex align-items-center ms-3 mb-2"
+            v-if="row_pa.pa_typejure === 9">
             <div class="me-1">Précisez :</div>
-            <m-form-text
-              :name="$Utils.randomstring('pa_typejure_other')"
-              v-model="row_pa.pa_typejure_other"
-            ></m-form-text>
+            <m-form-text :name="$Utils.randomstring('pa_typejure_other')"
+              v-model="row_pa.pa_typejure_other"></m-form-text>
           </div>
         </div>
         <div class="d-md-flex align-items-center mb-2">
           <div class="fw-bold me-4 width360">
             Avez-vous suivi des cours de dégustation ?
           </div>
-          <m-form-select
-            class="width200"
+          <m-form-select class="width200"
             :name="$Utils.randomstring('pa_coursdegustation')"
             v-model="row_pa.pa_coursdegustation"
-            :items="$store.state.items_boolean_int"
-          ></m-form-select>
+            :items="$store.state.items_boolean_int"></m-form-select>
         </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Habilitation délivrée par une interprofession
+          </div>
+          <m-form-combobox v-model="row_pa.center3"
+            style="max-width: 870px; min-width: 200px"
+            label=""
+            :store-url="$config.server_url + '/backoffice/1.0/centers'"
+            item-value="ce_id"
+            :item-text="$options.filters.formatCenterName"
+            :store-params="{
+              sort: 'ce_name ASC',
+            }"></m-form-combobox>
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Nuitée la veille du concours: souhaitez-vous réserver le logement
+            proposé dans le programme
+          </div>
+          <m-form-select class="width200"
+            :name="$Utils.randomstring('pa_reserverlogement')"
+            v-model="row_pa.pa_reserverlogement"
+            :items="$store.state.items_boolean_int"></m-form-select>
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Nuitée la veille du concours: accepteriez-vous de partager un
+            appartement avec d'autres personnes (chambre séparée) ? *
+          </div>
+          <m-form-select class="width200"
+            :name="$Utils.randomstring('pa_reserverlogement_partage')"
+            v-model="row_pa.pa_reserverlogement_partage"
+            :items="$store.state.items_boolean_int"></m-form-select>
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Soirée la veille du concours: souhaitez-vous participer ?
+          </div>
+          <m-form-select class="width200"
+            :name="$Utils.randomstring('pa_soireeveilleconcours')"
+            v-model="row_pa.pa_soireeveilleconcours"
+            :items="$store.state.items_boolean_int"></m-form-select>
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Déjeuner après le concours: souhaitez-vous participer?
+          </div>
+          <m-form-select class="width200"
+            :name="$Utils.randomstring('pa_dejeunerapresconcours')"
+            v-model="row_pa.pa_dejeunerapresconcours"
+            :items="$store.state.items_boolean_int"></m-form-select>
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Soirée et nuitée de la veille, déjeuner après le concours,
+            souhaitez-vous venir accompagné ?
+          </div>
+          <m-form-select class="width200"
+            :name="$Utils.randomstring('pa_dejeunerapresconcours_accompagne')"
+            v-model="row_pa.pa_dejeunerapresconcours_accompagne"
+            :items="$store.state.items_boolean_int"></m-form-select>
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2">
+          <div class="fw-bold me-4 width360">
+            Nom et Prénom de la l'accompagnant :
+          </div>
+          <m-form-text label=""
+            :name="$Utils.randomstring('pa_dejeunerapresconcours_name')"
+            style="min-width: 200px"
+            v-model="row_pa.pa_dejeunerapresconcours_name"></m-form-text>
+        </div>
+
         <div>
           <p class="mb-1 mt-3">
             Je déclare sur l'honneur que mes liens directs ou indirects avec les
@@ -270,20 +312,16 @@
             concerner les vins présentés au concours sont les suivants :
           </p>
           <div class="d-md-flex align-items-end ps-sm-4">
-            <m-form-radio
-              class="width150"
+            <m-form-radio class="width150"
               :name="$Utils.randomstring('pa_liensexistant')"
               id="pa_liensexistant"
               v-model="row_pa.pa_liensexistant"
-              :items="$store.state.items_liensJure"
-            ></m-form-radio>
+              :items="$store.state.items_liensJure"></m-form-radio>
 
-            <m-form-text
-              class="width250"
+            <m-form-text class="width250"
               inputGroupClass="input-group-sm"
               :name="$Utils.randomstring('pa_liensexistant_more')"
-              v-model="row_pa.pa_liensexistant_more"
-            ></m-form-text>
+              v-model="row_pa.pa_liensexistant_more"></m-form-text>
           </div>
         </div>
         <hr />
@@ -292,18 +330,14 @@
             label="Je reconnais avoir lu et compris le consentement au traitement de mes données personnelles, et j'accepte que mes données soient utilisées aux fins décrites dans le présent texte."
             :name="$Utils.randomstring('pa_jure_consentement')"
             v-model="row_pa.pa_jure_consentement"
-            :labelwhitespace="true"
-          ></m-form-checkbox>
-          <a class="text-blue pointer" @click.stop="showConsentement"
-            >Plus d'infos sur le traitement de mes données personnelles</a
-          >
-          <m-form-checkbox
-            class="mt-2"
+            :labelwhitespace="true"></m-form-checkbox>
+          <a class="text-blue pointer"
+            @click.stop="showConsentement">Plus d'infos sur le traitement de mes données personnelles</a>
+          <m-form-checkbox class="mt-2"
             label="Je ne souhaite pas que mes données personnelles soient conservées. Je reconnais que je ne pourrais donc pas participer au concours des vins du Sud-ouest."
             :name="$Utils.randomstring('noConsentement')"
             v-model="noConsentement"
-            :labelwhitespace="true"
-          ></m-form-checkbox>
+            :labelwhitespace="true"></m-form-checkbox>
         </div>
         <!--         <hr />
         <h4>Centres de dégustations</h4>
@@ -325,15 +359,12 @@
         ></m-form-checkbox> -->
       </div>
     </div>
-    <m-confirm-dialog
-      v-model="confirmJureValide"
+    <m-confirm-dialog v-model="confirmJureValide"
       text="Vous allez valider le juré, confirmez-vous cette action ?"
       title="Confirmation"
       @canceled="cancelJureValide()"
-      @confirmed="saveCandidat()"
-    ></m-confirm-dialog>
-    <m-confirm-dialog
-      v-model="confirmDevalidDialog"
+      @confirmed="saveCandidat()"></m-confirm-dialog>
+    <m-confirm-dialog v-model="confirmDevalidDialog"
       text="Voulez vous mettre à 'Non validé' tous les vins de ce candidat ? Attention cette action entraine peut être que vous devez créer un avoir manuellement et que ces vins ne participeront pas au Coucours"
       title="Confirmation"
       btnOkTxt="Oui"
@@ -341,20 +372,15 @@
       btn3Txt="Non"
       @btn3Action="DevalidCandidatNon()"
       @canceled="DevalidCandidatCancel()"
-      @confirmed="DevalidCandidatOui()"
-    ></m-confirm-dialog>
-    <m-message-dialog
-      v-model="dialogErr"
+      @confirmed="DevalidCandidatOui()"></m-confirm-dialog>
+    <m-message-dialog v-model="dialogErr"
       title="Erreur"
-      :text="dialogErrTxt"
-    ></m-message-dialog>
-    <m-message-dialog
-      v-model="showModalConsentement"
+      :text="dialogErrTxt"></m-message-dialog>
+    <m-message-dialog v-model="showModalConsentement"
       title="Confirmation de consentement au traitement de vos données personnelles"
       :text="consentementTxt"
       :width="1000"
-      color="#3eb2dc"
-    ></m-message-dialog>
+      color="#3eb2dc"></m-message-dialog>
   </div>
 </template>
 
@@ -455,10 +481,10 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
         if (this.row_pa_tocopy) params.lo_id = this.row_pa_tocopy;
         let response = await this.$axios.get(
           this.$config.server_url +
-            "/" +
-            route +
-            "/1.0/participations/" +
-            this.pa_id,
+          "/" +
+          route +
+          "/1.0/participations/" +
+          this.pa_id,
           { params }
         );
         this.row_pa = response.data.data;
@@ -537,6 +563,8 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
         },
         { field: "pa_civility", text: "Civilité" },
         { field: "pa_name", text: "Nom" },
+        { field: "pa_fonction", text: "Fonction" },
+        { field: "pa_phone_fix", text: "Téléphone fixe" },
         { field: "pa_firstname", text: "Prénom" },
         { field: "pa_address1", text: "Adresse" },
         { field: "pa_zip", text: "Code postal" },
@@ -586,7 +614,7 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
           !this.row_pa.pa_liensexistant_more
         )
           err.push({ text: "Juré lien existant : précisez" });
-        if(!this.row_pa.pa_jure_consentement){
+        if (!this.row_pa.pa_jure_consentement) {
           err.push({ text: "Consentement sur mes données personnelles" });
         }
       }
@@ -641,14 +669,15 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
       if (this.jureValideConfirmed) this.row_pa.sendEmailToJureValide = true;
       await this.trimFields();
       //this.row_pa.pa_email = this.row_pa.pa_email.trim();
+
       let response;
       if (this.row_pa.pa_id) {
         response = await this.$axios.put(
           this.$config.server_url +
-            "/" +
-            route +
-            "/1.0/participations/" +
-            this.row_pa.pa_id,
+          "/" +
+          route +
+          "/1.0/participations/" +
+          this.row_pa.pa_id,
           this.row_pa
         );
       } else {
@@ -714,15 +743,19 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
   .width150 {
     width: 150px;
   }
+
   .width250 {
     width: 250px;
   }
+
   .width200 {
     width: 200px;
   }
+
   .width300 {
     width: 300px;
   }
+
   .width360 {
     width: 360px;
   }
