@@ -32,7 +32,7 @@ Modiifer également le projet XXX
             v-model="row_wi.denomination"
             :clearable="false"
             class="mb-2"
-            :store-url="$config.server_url + '/backoffice/1.0/denominations'"
+            :store-url="$config.server_url + '/candidats/1.0/denominations'"
             item-value="de_id"
             item-text="de_name"
             :store-params="{
@@ -87,7 +87,7 @@ Modiifer également le projet XXX
                 v-model="row_wi.cepage1"
                 :clearable="false"
                 class="mb-2"
-                :store-url="$config.server_url + '/backoffice/1.0/cepages'"
+                :store-url="$config.server_url + '/candidats/1.0/cepages'"
                 item-value="cp_id"
                 item-text="cp_name"
                 :store-params="{
@@ -110,7 +110,7 @@ Modiifer également le projet XXX
                 v-model="row_wi.cepage2"
                 :clearable="false"
                 class="mb-2"
-                :store-url="$config.server_url + '/backoffice/1.0/cepages'"
+                :store-url="$config.server_url + '/candidats/1.0/cepages'"
                 item-value="cp_id"
                 item-text="cp_name"
                 :store-params="{
@@ -134,7 +134,7 @@ Modiifer également le projet XXX
               v-model="row_wi.cepage3"
               :clearable="false"
               class="mb-2"
-              :store-url="$config.server_url + '/backoffice/1.0/cepages'"
+              :store-url="$config.server_url + '/candidats/1.0/cepages'"
               item-value="cp_id"
               item-text="cp_name"
               :store-params="{
@@ -675,7 +675,8 @@ export default {
     async changeSelect(what) {
       if (window.calculContenanceMin)
         this.contenance_min = window.calculContenanceMin(
-          this.denominations,
+          // this.denominations,
+          [],
           this.row_wi
         );
     },
