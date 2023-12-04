@@ -30,15 +30,20 @@
     "node-sass": "^4.14.1",
     "prettier": "^2.4.1"
   },
-  "prettier": {},
+  "prettier": {
+    "tabWidth": 4,
+    "useTabs": true,
+    "printWidth": 150
+  },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "browser": true,
+      "es6": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
+      "plugin:vue/essential"
     ],
     "rules": {
       "no-console": [

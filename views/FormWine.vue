@@ -223,8 +223,8 @@ Modiifer également le projet XXX
               {{ contenance_total / 1000000 }} hl
             </div>
             <div :class="contenance_total >= contenance_min
-                ? 'text-success'
-                : 'text-danger'
+              ? 'text-success'
+              : 'text-danger'
               ">
               le minimum est de : {{ contenance_min / 1000000 }} hl
             </div>
@@ -891,7 +891,7 @@ export default {
       }
       this.row_wi = response.data.data;
       // les fichiers
-      console.log("this.filesSelected", this.filesSelected);
+      // console.log("this.filesSelected", this.filesSelected);
       for (let i = 1; i <= 4; i++) {
         if (this.filesSelected["file" + i] && !this["deleteFile" + i]) {
           await this.saveFiles(this.filesSelected["file" + i], i);

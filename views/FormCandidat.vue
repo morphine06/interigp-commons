@@ -15,6 +15,9 @@
           <m-form-text class="mb-2"
             :name="$Utils.randomstring('pa_address2')"
             v-model="row_pa.pa_address2"></m-form-text>
+          <m-form-text class="mb-2"
+            :name="$Utils.randomstring('pa_address3')"
+            v-model="row_pa.pa_address3"></m-form-text>
           <div class="row mb-2">
             <div class="col-md-6">
               <m-form-text label="Code postal *"
@@ -63,7 +66,8 @@
             <div class="col-md-6">
               <m-form-text label="Téléphone mobile"
                 :name="$Utils.randomstring('pa_phone_mobile')"
-                v-model="row_pa.pa_phone_mobile"></m-form-text>
+                v-model="row_pa.pa_phone_mobile">
+              </m-form-text>
             </div>
           </div>
 
@@ -143,6 +147,9 @@
               <m-form-text class="mb-2"
                 :name="$Utils.randomstring('pa_address2_fac')"
                 v-model="row_pa.pa_address2_fac"></m-form-text>
+              <m-form-text class="mb-2"
+                :name="$Utils.randomstring('pa_address3_fac')"
+                v-model="row_pa.pa_address3_fac"></m-form-text>
               <div class="row mb-2">
                 <div class="col-md-6">
                   <m-form-text label="Code postal *"
@@ -226,12 +233,12 @@
             :items="$store.state.items_boolean_int"></m-form-select>
         </div>
 
-        <div class="d-md-flex align-items-center mb-2">
+        <div class="d-md-flex align-items-center mb-2 d-flex">
           <div class="fw-bold me-4 width360">
             Habilitation délivrée par une interprofession
           </div>
           <m-form-combobox v-model="row_pa.center3"
-            style="max-width: 870px; min-width: 200px"
+            class="flex-fill"
             label=""
             :store-url="$config.server_url + '/backoffice/1.0/centers'"
             item-value="ce_id"
@@ -407,6 +414,7 @@ export default {
         pa_society_fac: "",
         pa_address1_fac: "",
         pa_address2_fac: "",
+        pa_address3_fac: "",
         pa_city_fac: "",
         pa_zip_fac: "",
         yearpreferences: {},
@@ -529,6 +537,9 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
         : "";
       this.row_pa.pa_address2_fac = this.row_pa.pa_address2
         ? this.row_pa.pa_address2
+        : "";
+      this.row_pa.pa_address3_fac = this.row_pa.pa_address3
+        ? this.row_pa.pa_address3
         : "";
       this.row_pa.pa_city_fac = this.row_pa.pa_city ? this.row_pa.pa_city : "";
       this.row_pa.pa_zip_fac = this.row_pa.pa_zip ? this.row_pa.pa_zip : "";
