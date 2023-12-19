@@ -59,15 +59,15 @@
             v-model="row_pa.pa_fonction"></m-form-text>
           <div class="row mb-2">
             <div class="col-md-6">
-              <m-form-text label="Téléphone fixe *"
-                :name="$Utils.randomstring('pa_phone_fix')"
-                v-model="row_pa.pa_phone_fix"></m-form-text>
-            </div>
-            <div class="col-md-6">
-              <m-form-text label="Téléphone mobile"
+              <m-form-text label="Téléphone mobile *"
                 :name="$Utils.randomstring('pa_phone_mobile')"
                 v-model="row_pa.pa_phone_mobile">
               </m-form-text>
+            </div>
+            <div class="col-md-6">
+              <m-form-text label="Téléphone fixe"
+                :name="$Utils.randomstring('pa_phone_fix')"
+                v-model="row_pa.pa_phone_fix"></m-form-text>
             </div>
           </div>
 
@@ -165,6 +165,21 @@
             </div>
           </div>
         </div>
+        <div class="row mt-3">
+          <div class="col">
+            <m-form-checkbox
+              label="Je m'engage à tenir à disposition des agents des DREETS les éléments de traçabilités et homogénéités des vins présentés."
+              :name="$Utils.randomstring('pa_candidat_consentement1')"
+              v-model="row_pa.pa_candidat_consentement1"
+              :labelwhitespace="true"></m-form-checkbox>
+            <m-form-checkbox class="mt-2"
+              label="Je m'engage à transmettre mes échantillons, mis en bouteille et habillés avec leur étiquette de commercialisation conforme à la législation en vigueur sur l'étiquetage. En savoir plus sur la réglementation sur l'étiquetage ici."
+              :name="$Utils.randomstring('pa_candidat_consentement2')"
+              v-model="row_pa.pa_candidat_consentement2"
+              :labelwhitespace="true"></m-form-checkbox>
+
+          </div>
+        </div>
       </div>
     </div>
     <div class="frame">
@@ -217,7 +232,7 @@
             v-model="row_pa.pa_typejure"
             :items="$store.state.items_typejure"></m-form-select>
           <div class="d-md-flex align-items-center ms-3 mb-2"
-            v-if="row_pa.pa_typejure === 9">
+            v-if="row_pa.pa_typejure === 13">
             <div class="me-1">Précisez :</div>
             <m-form-text :name="$Utils.randomstring('pa_typejure_other')"
               v-model="row_pa.pa_typejure_other"></m-form-text>
@@ -575,7 +590,8 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
         { field: "pa_civility", text: "Civilité" },
         { field: "pa_name", text: "Nom" },
         { field: "pa_fonction", text: "Fonction" },
-        { field: "pa_phone_fix", text: "Téléphone fixe" },
+        // { field: "pa_phone_fix", text: "Téléphone fixe" },
+        { field: "pa_phone_mobile", text: "Téléphone mobile" },
         { field: "pa_firstname", text: "Prénom" },
         { field: "pa_address1", text: "Adresse" },
         { field: "pa_zip", text: "Code postal" },
@@ -607,6 +623,11 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
           err.push({ text: "Adresse de facturation : code postal" });
         if (!this.row_pa.pa_city_fac)
           err.push({ text: "Adresse de facturation : ville" });
+        if (!this.row_pa.pa_candidat_consentement1)
+          err.push({ text: "Cocher la case 'Je m'engage à tenir à disposition des agents des DREETS...'" });
+        if (!this.row_pa.pa_candidat_consentement2)
+          err.push({ text: "Cocher la case 'Je m'engage à transmettre mes échantillons...'" });
+
       }
       // champs obligatoire du juré
       if (this.row_pa.pa_jure) {

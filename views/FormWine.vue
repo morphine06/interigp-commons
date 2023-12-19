@@ -61,7 +61,7 @@ Modiifer également le projet XXX
             :name="$Utils.randomstring('wi_cepages')"></m-form-text> -->
           <div class="row">
             <div class="col-md-6">
-              <m-form-select label="Catégorie"
+              <m-form-select label="Catégorie *"
                 class="mb-2"
                 id="selectCategorie"
                 :name="$Utils.randomstring('wi_categorie')"
@@ -70,7 +70,7 @@ Modiifer également le projet XXX
                 :rules="[$Validation.mandatory]"></m-form-select>
             </div>
             <div class="col-md-6">
-              <m-form-select label="Type"
+              <m-form-select label="Type *"
                 class="mb-2"
                 id="selectType"
                 :name="$Utils.randomstring('wi_type')"
@@ -160,13 +160,13 @@ Modiifer également le projet XXX
             class="mb-2"
             v-model="row_wi.wi_refcontenant"
             :name="$Utils.randomstring('wi_refcontenant')"></m-form-text>
-          <m-form-text label="Volume total du lot (en hl)"
+          <m-form-text label="Volume total du lot (en hl) *"
             class="mb-2"
             v-model="row_wi.wi_volume"
             :name="$Utils.randomstring('wi_volume')"></m-form-text>
 
           <m-form-select class="width200"
-            label="Etes-vous le détenteur du lot présenté ?"
+            label="Etes-vous le détenteur du lot présenté ? *"
             :name="$Utils.randomstring('wi_detenteurlot')"
             v-model="row_wi.wi_detenteurlot"
             :items="$store.state.items_boolean_int"></m-form-select>
@@ -234,6 +234,19 @@ Modiifer également le projet XXX
     </div>
     <div class="frame">
       <h4>Fichiers</h4>
+      <div class="row">
+        <div class="col">
+          Attention, seuls seront acceptés les bulletins d'analyse datant de moins d’un an et comportant, outre
+          les éléments permettant d’identifier l’opérateur et l’échantillon (à savoir : dénomination, couleur,
+          millésime, numéro de lot ou numéro de cuve, volume total du lot ou partiel),ainsi que les éléments
+          analytiques suivants :<br>
+          • titre alcoométrique acquis et titre alcoométrique en puissance, exprimés en % vol<br>
+          • acidité volatile, exprimée en méq/l<br>
+          • acidité totale, exprimée en méq/l<br>
+          • anhydride sulfureux total, exprimé en mg/l<br>
+          • sucres (glucose + fructose), exprimés en g/l<br><br>
+        </div>
+      </div>
       <div class="row mb-4 d-flex align-items-center">
         <div class="col-md-7">
           <div class="row">
@@ -533,6 +546,7 @@ export default {
     for (let i = 2010; i <= this.$dayjs().format("YYYY") * 1; i++) {
       millesimes.push({ text: i, value: i });
     }
+    millesimes.reverse();
     return {
       wi_revendication_stop: true,
       wi_analyse_stop: true,
@@ -653,7 +667,10 @@ export default {
       this.row_wi = row_wi;
 
       let millesimes = [];
-      for (let i = row_wi.wi_year; i > row_wi.wi_year - 4; i--) {
+      if (!row_wi.wi_year) {
+        row_wi.wi_year = this.$store.state.year;
+      }
+      for (let i = row_wi.wi_year - 1; i > row_wi.wi_year - 4; i--) {
         millesimes.push({ text: i, value: i });
       }
       this.millesimes = millesimes;
@@ -808,11 +825,19 @@ export default {
         // { field: "wi_denomination", text: "dénomination" },
         { field: "wi_couleur", text: "Couleur" },
         { field: "wi_millesime", text: "Millesime" },
+        { field: "wi_categorie", text: "Catégorie" },
+        { field: "wi_type", text: "Type" },
+        { field: "wi_volume", text: "Volume total du lot" },
+        { field: "wi_detenteurlot", text: "Etes-vous le détenteur du lot présenté ?" },
+
       ];
       if (!row_pa.pa_id) err.push({ text: "Candiadat" });
       for (let ifi = 0; ifi < fieldRequired.length; ifi++) {
         const field = fieldRequired[ifi];
         if (!this.row_wi[field.field]) err.push(field);
+      }
+      if (!this.row_wi.denomination || !this.row_wi.denomination.de_id) {
+        err.push({ text: "Dénomination" });
       }
       if (!this.row_wi.wi_numlot && !this.row_wi.wi_refcontenant) {
         err.push({ text: "Numéro du lot ou référence des contenants" });
