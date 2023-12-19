@@ -707,8 +707,13 @@ export default {
       this.contenance_total = total;
     },
     inputValidFile(what) {
-      this.row_wi[what] =
-        "Validé le " + this.$dayjs().format("DD/MM/YYYY [à] HH[H]mm");
+      if (this.row_wi['switch_' + what]) {
+        this.row_wi[what] =
+          "Validé le " + this.$dayjs().format("DD/MM/YYYY [à] HH[H]mm") + " par " + this.$store.state.user.us_firstname + " " + this.$store.state.user.us_name;
+      }
+      else {
+        // this.row_wi[what] = "";
+      }
     },
     addContenant() {
       this.contenants.push({ contenant: "", nombre: "" });
