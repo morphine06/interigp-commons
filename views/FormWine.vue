@@ -76,7 +76,8 @@ Modiifer également le projet XXX
                 :name="$Utils.randomstring('wi_type')"
                 :items="this.$store.state.items_winesTypes"
                 v-model="row_wi.wi_type"
-                :rules="[$Validation.mandatory]"></m-form-select>
+                :rules="[$Validation.mandatory]"
+                @input="changeSelect('witype')"></m-form-select>
             </div>
           </div>
 
