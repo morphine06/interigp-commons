@@ -73,8 +73,8 @@
 
           <m-form-combobox v-model="row_pa.center1"
             style="max-width: 870px"
-            label="Votre interprofession principale"
-            :store-url="$config.server_url + '/backoffice/1.0/centers'"
+            label="Votre interprofession principale *"
+            :store-url="$config.server_url + '/' + from + '/1.0/centers'"
             item-value="ce_id"
             :item-text="$options.filters.formatCenterName"
             :store-params="{
@@ -83,7 +83,7 @@
           <m-form-combobox v-model="row_pa.center2"
             style="max-width: 870px"
             label="Votre interprofession secondaire"
-            :store-url="$config.server_url + '/backoffice/1.0/centers'"
+            :store-url="$config.server_url + '/' + from + '/1.0/centers'"
             item-value="ce_id"
             :item-text="$options.filters.formatCenterName"
             :store-params="{
@@ -255,7 +255,7 @@
           <m-form-combobox v-model="row_pa.center3"
             class="flex-fill"
             label=""
-            :store-url="$config.server_url + '/backoffice/1.0/centers'"
+            :store-url="$config.server_url + '/' + from + '/1.0/centers'"
             item-value="ce_id"
             :item-text="$options.filters.formatCenterName"
             :store-params="{
@@ -490,6 +490,7 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
   },
   async mounted() {
     await this.loadParticipation();
+    // if (!this.from) this.from = "backoffice";
     // console.log("this.row_yp", this.row_yp, this.row_pa.yearpreferences);
     // this.row_yp2 = this.row_yp ? this.row_yp : this.row_pa.yearpreferences;
   },
@@ -601,6 +602,8 @@ Dans le cadre du traitement décrit aux présentes, sont prises toutes les mesur
         const field = fieldRequired[ifi];
         if (!this.row_pa[field.field]) err.push(field);
       }
+      if (!this.row_pa.center1 || !this.row_pa.center1.ce_id)
+        err.push({ text: "Votre interprofession principale" });
       if (!this.row_pa.login.lo_login)
         err.push({ text: "Login (en bas de la fenêtre)" });
       if (
