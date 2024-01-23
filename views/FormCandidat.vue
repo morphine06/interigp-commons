@@ -356,7 +356,7 @@
           <a class="text-blue pointer"
             @click.stop="showConsentement">Plus d'infos sur le traitement de mes données personnelles</a>
           <m-form-checkbox class="mt-2"
-            label="Je ne souhaite pas que mes données personnelles soient conservées. Je reconnais que je ne pourrais donc pas participer au concours des vins du Sud-ouest."
+            label="Je ne souhaite pas que mes données personnelles soient conservées. Je reconnais que je ne pourrais donc pas participer au Concours National des vins IGP."
             :name="$Utils.randomstring('noConsentement')"
             v-model="noConsentement"
             :labelwhitespace="true"></m-form-checkbox>
