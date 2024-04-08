@@ -15,7 +15,34 @@
         </div>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Prix HT le mille (port non compris)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>De 0 à 99.999 unités</td>
+              <td>25 €</td>
+            </tr>
+            <tr>
+              <td>De 100.000 à 499.999 unités</td>
+              <td>20 €</td>
+            </tr>
+            <tr>
+              <td>Plus de 500.000 unités</td>
+              <td>15 €</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <!-- <div class="row mt-3">
       <div class="col-md-7">
         <div>
           Sous-total HT :
@@ -34,12 +61,6 @@
         </div>
         <div v-if="from == 'candidats'">
           Frais de port :
-          <!-- <span
-            @click="showFraisDePort = true"
-            v-if="!showFraisDePort"
-            class="color-red pointer"
-            >Voir les frais de port à titre indicatif</span
-          > -->
           <span @click="showFraisDePort = false" class="color-red pointer"
             >{{ row_or.or_fraisport }} €</span
           >
@@ -86,7 +107,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -139,4 +160,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss"
+  scoped></style>
