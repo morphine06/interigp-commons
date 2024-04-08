@@ -20,8 +20,8 @@
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>&nbsp;</th>
-              <th>Prix HT le mille (port non compris)</th>
+              <th>Tarifs des macarons :</th>
+              <th>Prix HT pour mille (port non compris)</th>
             </tr>
           </thead>
           <tbody>
