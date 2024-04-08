@@ -15,9 +15,9 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col">
-        <table class="table">
+        <table class="table table-striped table-bordered">
           <thead>
             <tr>
               <th>&nbsp;</th>
