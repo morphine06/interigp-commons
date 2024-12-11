@@ -237,7 +237,8 @@ Modiifer également le projet XXX
       <h4>Fichiers</h4>
       <div class="row">
         <div class="col">
-          Attention, seuls seront acceptés les bulletins d'analyse datant de moins d’un an et comportant, outre
+          Attention, seuls seront acceptés les bulletins d'analyse datant de moins d’un an et comportant,
+          outre
           les éléments permettant d’identifier l’opérateur et l’échantillon (à savoir : dénomination, couleur,
           millésime, numéro de lot ou numéro de cuve, volume total du lot ou partiel),ainsi que les éléments
           analytiques suivants :<br>
@@ -814,7 +815,11 @@ export default {
     wineValidChange(val) {
       this.row_wi.wi_valid = val;
     },
+    wineValidChange2(val) {
+      this.row_wi.wi_valid2 = val;
+    },
     wineMedailleChange(row_wi) {
+      this.row_wi.wi_explain = row_wi.wi_explain;
       this.row_wi.wi_medaille = row_wi.wi_medaille;
       this.row_wi.wi_medaille_commentaire = row_wi.wi_medaille_commentaire;
       this.row_wi.wi_medaille_commentaire_other =
@@ -963,5 +968,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
